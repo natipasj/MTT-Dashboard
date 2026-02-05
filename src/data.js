@@ -1,32 +1,30 @@
 import { startOfYear, endOfYear, eachDayOfInterval, format, isSameMonth, startOfMonth, endOfMonth, getDay } from 'date-fns';
 
 const BRANCH_LOCATIONS = [
-  { id: "1", name: "สำนักงานใหญ่ (รามคำแหง 167)", province: "กรุงเทพมหานคร", lat: 13.7915, lng: 100.7075 },
-  { id: "2", name: "รามคำแหง-บางกะปิ", province: "กรุงเทพมหานคร", lat: 13.7705, lng: 100.6619 },
-  { id: "3", name: "มีนบุรี-แยกมิสทีน", province: "กรุงเทพมหานคร", lat: 13.7931, lng: 100.7018 },
-  { id: "4", name: "ลำลูกกา-สายไหม", province: "ปทุมธานี", lat: 13.9238, lng: 100.6725 },
-  { id: "5", name: "ร่มเกล้า-กรุงเทพกรีฑาตัดใหม่", province: "กรุงเทพมหานคร", lat: 13.7495, lng: 100.7437 },
-  { id: "6", name: "รามอินทรา-มีนบุรี", province: "กรุงเทพมหานคร", lat: 13.8125, lng: 100.7069 },
-  { id: "7", name: "ศรีนครินทร์-บางนา", province: "สมุทรปราการ", lat: 13.6428, lng: 100.6362 },
-  { id: "8", name: "เทพารักษ์-บางพลี", province: "สมุทรปราการ", lat: 13.6062, lng: 100.6865 },
-  { id: "9", name: "สมุทรปราการ-ศรีนครินทร์", province: "สมุทรปราการ", lat: 13.5936, lng: 100.6148 },
-  { id: "10", name: "ปิ่นเกล้า-ราชพฤกษ์", province: "กรุงเทพมหานคร", lat: 13.8076, lng: 100.4501 },
-  { id: "11", name: "กาญจนาภิเษก-บางใหญ่", province: "นนทบุรี", lat: 13.8554, lng: 100.4123 },
-  { id: "12", name: "รัตนาธิเบศร์-ราชพฤกษ์", province: "นนทบุรี", lat: 13.8732, lng: 100.4536 },
-  { id: "13", name: "บางบัวทอง-กาญจนาภิเษก", province: "นนทบุรี", lat: 13.9287, lng: 100.4135 },
-  { id: "14", name: "บางแค-กาญจนาภิเษก", province: "กรุงเทพมหานคร", lat: 13.7434, lng: 100.4054 },
-  { id: "15", name: "ติวานนท์-ปากเกร็ด", province: "นนทบุรี", lat: 13.9189, lng: 100.5236 },
-  { id: "16", name: "กิ่งแก้ว-สุวรรณภูมิ", province: "สมุทรปราการ", lat: 13.6825, lng: 100.7303 },
-  { id: "17", name: "รังสิต-นครนายก คลอง 4", province: "ปทุมธานี", lat: 14.0051, lng: 100.6978 },
-  { id: "18", name: "บางบอน-กาญจนาภิเษก", province: "กรุงเทพมหานคร", lat: 13.6592, lng: 100.4057 },
-  { id: "19", name: "อ้อมน้อย-เพชรเกษม", province: "สมุทรสาคร", lat: 13.7042, lng: 100.3156 }
+  { id: "HP000", name: "รักเหมาสเตชั่นออนไลน์", province: "กรุงเทพมหานคร", lat: 13.7915, lng: 100.7075 },
+  { id: "HP002", name: "รามคำแหง-บางกะปิ", province: "กรุงเทพมหานคร", lat: 13.7705, lng: 100.6619 },
+  { id: "HP005", name: "มีนบุรี-แยกมิสทีน", province: "กรุงเทพมหานคร", lat: 13.7931, lng: 100.7018 },
+  { id: "HP029", name: "ลำลูกกา-สายไหม", province: "ปทุมธานี", lat: 13.9238, lng: 100.6725 },
+  { id: "HP020", name: "ร่มเกล้า-กรุงเทพกรีฑาตัดใหม่", province: "กรุงเทพมหานคร", lat: 13.7495, lng: 100.7437 },
+  { id: "HP014", name: "รามอินทรา-มีนบุรี", province: "กรุงเทพมหานคร", lat: 13.8125, lng: 100.7069 },
+  { id: "HP026", name: "ศรีนครินทร์-บางนา", province: "สมุทรปราการ", lat: 13.6428, lng: 100.6362 },
+  { id: "HP027", name: "เทพารักษ์-บางพลี", province: "สมุทรปราการ", lat: 13.6062, lng: 100.6865 },
+  { id: "HP011", name: "สมุทรปราการ-ศรีนครินทร์", province: "สมุทรปราการ", lat: 13.5936, lng: 100.6148 },
+  { id: "HP022", name: "ปิ่นเกล้า-ราชพฤกษ์", province: "กรุงเทพมหานคร", lat: 13.8076, lng: 100.4501 },
+  { id: "HP023", name: "กาญจนาภิเษก-บางใหญ่", province: "นนทบุรี", lat: 13.8554, lng: 100.4123 },
+  { id: "HP021", name: "รัตนาธิเบศร์-ราชพฤกษ์", province: "นนทบุรี", lat: 13.8732, lng: 100.4536 },
+  { id: "HP024", name: "บางบัวทอง-กาญจนาภิเษก", province: "นนทบุรี", lat: 13.9287, lng: 100.4135 },
+  { id: "HP025", name: "บางแค-กาญจนาภิเษก", province: "กรุงเทพมหานคร", lat: 13.7434, lng: 100.4054 },
+  { id: "HP013", name: "ติวานนท์-ปากเกร็ด", province: "นนทบุรี", lat: 13.9189, lng: 100.5236 },
+  { id: "HP028", name: "กิ่งแก้ว-สุวรรณภูมิ", province: "สมุทรปราการ", lat: 13.6825, lng: 100.7303 },
+  { id: "HP030", name: "รังสิต-นครนายก คลอง 4", province: "ปทุมธานี", lat: 14.0051, lng: 100.6978 },
+  { id: "HP017", name: "บางบอน-กาญจนาภิเษก", province: "กรุงเทพมหานคร", lat: 13.6592, lng: 100.4057 },
+  { id: "HP031", name: "อ้อมน้อย-เพชรเกษม", province: "สมุทรสาคร", lat: 13.7042, lng: 100.3156 }
 ];
 
 export { BRANCH_LOCATIONS }; // Export for use in Map Component
 
-const ONLINE_BRANCH = { id: "0", name: "รักเหมาสเตชั่นออนไลน์", province: "กรุงเทพมหานคร", lat: 13.75, lng: 100.50 };
-
-const BRANCHES = ["0 รักเหมาสเตชั่นออนไลน์", ...BRANCH_LOCATIONS.map(b => `${b.id} ${b.name}`)];
+const BRANCHES = BRANCH_LOCATIONS.map(b => `${b.id} ${b.name}`);
 
 const CHANNELS = ["Online", "PC"];
 const SHIPPING_TYPES = ["FTL", "SML", "Pickup"];
@@ -65,10 +63,17 @@ export const generateData = () => {
   const customers = [];
 
   for (let i = 0; i < 500; i++) {
+    // Assign Bias: 30% Online, 30% PC, 40% Mixed (Hybrid)
+    const rand = Math.random();
+    let preferredChannel = "Hybrid";
+    if (rand < 0.3) preferredChannel = "Online";
+    else if (rand < 0.6) preferredChannel = "PC";
+
     customers.push({
       id: `CUST-${1000 + i}`,
-      name: CUSTOMER_NAMES[Math.floor(Math.random() * CUSTOMER_NAMES.length)] + " " + (i + 1), // Append number to ensure uniqueness if needed, or just random
-      preferredBranch: BRANCHES[Math.floor(Math.random() * BRANCHES.length)]
+      name: CUSTOMER_NAMES[Math.floor(Math.random() * CUSTOMER_NAMES.length)] + " " + (i + 1),
+      preferredBranch: BRANCHES[Math.floor(Math.random() * BRANCHES.length)],
+      preferredChannel: preferredChannel
     });
   }
 
@@ -88,7 +93,17 @@ export const generateData = () => {
     for (let i = 0; i < dailyOrders; i++) {
       dailyCount++;
       const customer = customers[Math.floor(Math.random() * customers.length)];
-      const isOnline = Math.random() > 0.4;
+
+      // Determine Channel based on preference
+      let isOnline;
+      if (customer.preferredChannel === "Online") {
+        isOnline = Math.random() > 0.05; // 95% Online -> Mostly Online Only
+      } else if (customer.preferredChannel === "PC") {
+        isOnline = Math.random() > 0.95; // 5% Online -> Mostly Walk-In
+      } else {
+        isOnline = Math.random() > 0.5; // 50/50 -> Hybrid
+      }
+
       const branch = Math.random() > 0.8 ? BRANCHES[Math.floor(Math.random() * BRANCHES.length)] : customer.preferredBranch;
 
       const pClass = PRODUCT_CLASSES[Math.floor(Math.random() * PRODUCT_CLASSES.length)];

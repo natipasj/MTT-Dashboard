@@ -101,30 +101,31 @@ export const CalendarHeatmap = ({ data }) => {
 }
 
 export const ChannelChart = ({ data }) => {
+    // Dynamic height: 40px per item or min 300px
+    const chartHeight = Math.max(300, data.length * 40);
+
     return (
-        <div className="chart-container">
+        <div className="chart-container" style={{ overflowY: 'auto', overflowX: 'hidden' }}>
             <h4 style={{ margin: '0 0 5px 0', fontSize: '0.8rem', color: '#64748b' }}>GMV BY CHANNEL</h4>
-            <ResponsiveContainer width="100%" height="100%">
-                <BarChart layout="vertical" data={data} barSize={12} margin={{ top: 0, right: 10, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#e2e8f0" />
-                    <XAxis type="number" hide />
-                    <YAxis dataKey="name" type="category" width={35} tick={{ fontSize: 8, fill: '#475569' }} axisLine={false} tickLine={false} />
-                    <Tooltip
-                        cursor={{ fill: 'transparent' }}
-                        contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '10px' }}
-                    />
-                    <Legend iconSize={6} wrapperStyle={{ fontSize: '9px' }} />
-                    <Bar name="Online Only" dataKey="Online" stackId="a" fill="#facc15" radius={[0, 0, 0, 0]}>
-                        <LabelList dataKey="Online" position="top" formatter={(val) => val > 0 ? val.toFixed(1) : ''} style={{ fontSize: '10px', fill: '#1e293b', fontWeight: 'bold' }} />
-                    </Bar>
-                    <Bar name="Hybrid" dataKey="Hybrid" stackId="a" fill="#fb923c" radius={[0, 0, 0, 0]}>
-                        <LabelList dataKey="Hybrid" position="top" formatter={(val) => val > 0 ? val.toFixed(1) : ''} style={{ fontSize: '10px', fill: '#1e293b', fontWeight: 'bold' }} />
-                    </Bar>
-                    <Bar name="Walk-In (PC)" dataKey="WalkIn" stackId="a" fill="#ea580c" radius={[0, 4, 4, 0]}>
-                        <LabelList dataKey="WalkIn" position="top" formatter={(val) => val > 0 ? val.toFixed(1) : ''} style={{ fontSize: '10px', fill: '#1e293b', fontWeight: 'bold' }} />
-                    </Bar>
-                </BarChart>
-            </ResponsiveContainer>
+            <div style={{ height: chartHeight, width: '100%' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart layout="vertical" data={data} barSize={12} margin={{ top: 0, right: 10, bottom: 0 }}>
+                        <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#e2e8f0" />
+                        <XAxis type="number" hide />
+                        {/* interval={0} forces all labels to show */}
+                        <YAxis dataKey="name" type="category" width={45} interval={0} tick={{ fontSize: 9, fill: '#475569', fontWeight: 500 }} axisLine={false} tickLine={false} />
+                        <Tooltip
+                            cursor={{ fill: '#f8fafc' }}
+                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '11px' }}
+                            formatter={(val, name) => [val.toFixed(2) + ' MB', name]}
+                        />
+                        <Legend iconSize={8} wrapperStyle={{ fontSize: '10px' }} />
+                        <Bar name="Online Only" dataKey="Online" stackId="a" fill="#facc15" radius={[0, 0, 0, 0]} />
+                        <Bar name="Hybrid" dataKey="Hybrid" stackId="a" fill="#fb923c" radius={[0, 0, 0, 0]} />
+                        <Bar name="Walk-In (PC)" dataKey="WalkIn" stackId="a" fill="#ea580c" radius={[0, 4, 4, 0]} />
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
         </div>
     )
 }
