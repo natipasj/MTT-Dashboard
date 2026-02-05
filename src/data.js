@@ -1,25 +1,12 @@
 import { startOfYear, endOfYear, eachDayOfInterval, format, isSameMonth, startOfMonth, endOfMonth, getDay } from 'date-fns';
 
 const BRANCH_LOCATIONS = [
-  { id: "HP000", name: "รักเหมาสเตชั่นออนไลน์", province: "กรุงเทพมหานคร", lat: 13.7915, lng: 100.7075 },
-  { id: "HP002", name: "รามคำแหง-บางกะปิ", province: "กรุงเทพมหานคร", lat: 13.7705, lng: 100.6619 },
+  { id: "HP000", name: "รักเหมาสเตชั่นออนไลน์", province: "กรุงเทพมหานคร", lat: 13.75, lng: 100.50 },
   { id: "HP005", name: "มีนบุรี-แยกมิสทีน", province: "กรุงเทพมหานคร", lat: 13.7931, lng: 100.7018 },
-  { id: "HP029", name: "ลำลูกกา-สายไหม", province: "ปทุมธานี", lat: 13.9238, lng: 100.6725 },
-  { id: "HP020", name: "ร่มเกล้า-กรุงเทพกรีฑาตัดใหม่", province: "กรุงเทพมหานคร", lat: 13.7495, lng: 100.7437 },
-  { id: "HP014", name: "รามอินทรา-มีนบุรี", province: "กรุงเทพมหานคร", lat: 13.8125, lng: 100.7069 },
-  { id: "HP026", name: "ศรีนครินทร์-บางนา", province: "สมุทรปราการ", lat: 13.6428, lng: 100.6362 },
-  { id: "HP027", name: "เทพารักษ์-บางพลี", province: "สมุทรปราการ", lat: 13.6062, lng: 100.6865 },
   { id: "HP011", name: "สมุทรปราการ-ศรีนครินทร์", province: "สมุทรปราการ", lat: 13.5936, lng: 100.6148 },
-  { id: "HP022", name: "ปิ่นเกล้า-ราชพฤกษ์", province: "กรุงเทพมหานคร", lat: 13.8076, lng: 100.4501 },
-  { id: "HP023", name: "กาญจนาภิเษก-บางใหญ่", province: "นนทบุรี", lat: 13.8554, lng: 100.4123 },
-  { id: "HP021", name: "รัตนาธิเบศร์-ราชพฤกษ์", province: "นนทบุรี", lat: 13.8732, lng: 100.4536 },
-  { id: "HP024", name: "บางบัวทอง-กาญจนาภิเษก", province: "นนทบุรี", lat: 13.9287, lng: 100.4135 },
-  { id: "HP025", name: "บางแค-กาญจนาภิเษก", province: "กรุงเทพมหานคร", lat: 13.7434, lng: 100.4054 },
   { id: "HP013", name: "ติวานนท์-ปากเกร็ด", province: "นนทบุรี", lat: 13.9189, lng: 100.5236 },
-  { id: "HP028", name: "กิ่งแก้ว-สุวรรณภูมิ", province: "สมุทรปราการ", lat: 13.6825, lng: 100.7303 },
-  { id: "HP030", name: "รังสิต-นครนายก คลอง 4", province: "ปทุมธานี", lat: 14.0051, lng: 100.6978 },
-  { id: "HP017", name: "บางบอน-กาญจนาภิเษก", province: "กรุงเทพมหานคร", lat: 13.6592, lng: 100.4057 },
-  { id: "HP031", name: "อ้อมน้อย-เพชรเกษม", province: "สมุทรสาคร", lat: 13.7042, lng: 100.3156 }
+  { id: "HP014", name: "รามอินทรา-มีนบุรี", province: "กรุงเทพมหานคร", lat: 13.8125, lng: 100.7069 },
+  { id: "HP017", name: "บางบอน-กาญจนาภิเษก", province: "กรุงเทพมหานคร", lat: 13.6592, lng: 100.4057 }
 ];
 
 export { BRANCH_LOCATIONS }; // Export for use in Map Component
@@ -30,8 +17,8 @@ const CHANNELS = ["Online", "PC"];
 const SHIPPING_TYPES = ["FTL", "SML", "Pickup"];
 
 // Thai Mock Data
-const PRODUCT_CLASSES = ["ปูนซีเมนต์", "เหล็กเส้น", "อิฐมวลเบา", "กระเบื้องหลังคา", "สุขภัณฑ์", "สีทาบ้าน", "เครื่องมือช่าง"];
-const BRANDS = ["เสือ (Tiger)", "ทีพีไอ (TPI)", "เอสซีจี (SCG)", "คิวคอน (Q-Con)", "เพชร", "อินทรี", "ทีโอเอ (TOA)"];
+const PRODUCT_CLASSES = ["ปูนซีเมนต์", "เหล็กเส้น", "อิฐมวลเบา", "กระเบื้องหลังคา", "สุขภัณฑ์", "เครื่องมือช่าง"];
+const BRANDS = ["เสือ (Tiger)", "ทีพีไอ (TPI)", "เอสซีจี (SCG)", "คิวคอน (Q-Con)", "เพชร", "อินทรี"];
 
 const CUSTOMER_NAMES = [
   "ช่างสมชาย รับเหมา", "ช่างอู๊ด งานปูน", "ช่างศักดิ์ ซ่อมแซม", "ช่างหนุ่ม งานเหล็ก",
@@ -52,7 +39,6 @@ const getProduct = (cls, brand) => {
   if (cls === "อิฐมวลเบา") return `[${brand}] อิฐมวลเบา G4 ขนาด 20x60x7.5ซม.`;
   if (cls === "กระเบื้องหลังคา") return `[${brand}] กระเบื้องลอนคู่ สีธรรมชาติ ${suffix}`;
   if (cls === "สุขภัณฑ์") return `[${brand}] ชักโครก 2 ชิ้น รุ่น ${suffix}`;
-  if (cls === "สีทาบ้าน") return `[${brand}] สีน้ำอะคริลิค ภายนอก ${suffix} 9 ลิตร`;
   return `[${brand}] ${cls} ${suffix}`;
 };
 
